@@ -9,6 +9,7 @@
 ### 0. 前置步骤
 * 登录企业微信的[管理后台](https://work.weixin.qq.com/wework_admin/loginpage_wx)创建机器人，名字随意取
   * 点击【应用管理】-【创建应用】，填写完毕保存。
+* 准备一个服务器，服务器地址要是海外的，不能是香港的，服务要部署在服务器上，不能部署在本地。
 
 ### 1. 配置
 
@@ -31,13 +32,13 @@
 * **选择1：Docker运行（sqlite3版，推荐）**
 
 ```shell
-git clone https://github.com/yijia2413/chatgpt-wecom.git
+git clone https://github.com/liyang-os/chatgpt-wecom.git
 cd chatgpt-wecom
 
 # 构建镜像
 make dockerenv
 
-# 运行带sqlite的镜像，运行前确认chatgpt.conf修改完毕
+# 运行带sqlite的镜像，运行前确认chatgpt.conf修改完毕,注意端口选择只能是8000（在程序里面写死了）
 docker run -it -d --name chatgpt --restart=always \
   -v $(pwd)/conf/chatgpt.conf:/home/works/program/chatgpt.conf \
   -p 0.0.0.0:8000:8000 chatgpt-wecom:0.1.1
@@ -50,12 +51,12 @@ docker compose up -d
 ```
 
 * **选择3：本地运行**
-* 下载对应的二进制，[chatgpt-wecom](https://github.com/yijia2413/chatgpt-wecom/releases)
+* 下载对应的二进制，[chatgpt-wecom](https://github.com/liyang/chatgpt-wecom/releases)
 * 执行命令 `./chatgpt-wecom -conf=conf/chatgpt.conf` 即可，同理需要确认`chatgpt.conf`配置完毕
 
 ### 3. 配置企业微信
 
-* URL 配置格式：`http://ip:port/wecom/receive`
+* URL 配置格式：`http://ip:8000/wecom/receive`
 * 在企业微信后台，添加可信IP地址
 
 ## FAQ
